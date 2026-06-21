@@ -1,0 +1,13 @@
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments (since you are using streamlit-env)
+streamlit-env/
+venv/
+env/
+.env
+
+secrets.toml

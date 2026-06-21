@@ -1,0 +1,3 @@
+Start the app :  
+    Step 1 - source .venv/Scripts/activate
+    Step 2 - streamlit run app.py
