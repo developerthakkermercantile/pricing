@@ -139,6 +139,8 @@ if selected_item != NONE_SELECTION:
                 "c": st.column_config.NumberColumn("C (Closing/Pick)", format="%.2f"),
                 "gst_percentage": st.column_config.NumberColumn("GST Percentage"),
                 "gst_amount": st.column_config.NumberColumn("GST amount", format="%.2f"),
+                "product_gst_percentage": st.column_config.NumberColumn("Product GST Percentage"),
+                "product_gst_amount": st.column_config.NumberColumn("Product GST amount", format="%.2f"),
                 "total": st.column_config.NumberColumn("Total Fixed Costs", format="%.2f"),
             },
         )
@@ -154,6 +156,6 @@ if selected_item != NONE_SELECTION:
     )
 
     st.subheader("📋 Items Mapped with E-commerce Charges")
-    mapped_df = map_item_charges(item_df, cost_slab, params["gst_status"])
+    mapped_df = map_item_charges(item_df, cost_slab, params["gst_status"], params["product_gst_status"])
     st.dataframe(mapped_df, hide_index=True)
     

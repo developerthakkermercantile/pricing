@@ -37,6 +37,12 @@ def build_merged_grid(
     sorted_values = all_numbers.tolist()
 
     slabs = []
+
+    item_tax_str = str(item_tax_template) if pd.notna(item_tax_template) and item_tax_template else "0"
+    product_gst_number = re.search(r'\d+', item_tax_str)
+    
+    product_gst_percentage = float(product_gst_number.group()) if product_gst_number else 0.0
+    product_gst_rate = product_gst_percentage / 100.0  # Convert to decimal (e.g., 18 -> 0.18)
     
     # 4. Iterate through consecutive pairs of the unified timeline
     cost_lower_slab  = 0 
@@ -79,11 +85,16 @@ def build_merged_grid(
         gst_percentage = float(gst_match.group()) if gst_match else 0.0
         
         gst_amount = 0.0
+        product_gst_amount = 0.0
         
         # Apply the GST logic based on the sidebar filter selection
         if gst_status == INCLUDED:
             gst_amount = total_flat_price * (gst_percentage / 100.0)
             total_flat_price = total_flat_price + gst_amount
+
+        if product_gst_status == INCLUDED:
+            product_gst_amount = high * product_gst_rate
+            total_flat_price = total_flat_price + product_gst_amount
         
         # 8. Apply the cost deduction logic
         cost_higher_slab = high - total_flat_price
@@ -100,6 +111,8 @@ def build_merged_grid(
             "c": c_price,
             "gst_percentage": gst_percentage,
             "gst_amount": gst_amount,
+            "product_gst_percentage": product_gst_percentage,
+            "product_gst_amount": product_gst_amount,
             "total": total_flat_price
         })
 
