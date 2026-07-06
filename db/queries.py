@@ -165,7 +165,6 @@ item_base AS (
     WHERE i.disabled = 0
       AND i.brand    IS NOT NULL
       AND i.brand    != ''
-      AND i.item_code = "Nature's Blend Almond Mamra Selected 500 G Jar"
 )
 
 SELECT
